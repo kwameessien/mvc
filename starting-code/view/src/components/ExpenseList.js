@@ -9,7 +9,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 // import user action function from utils dir
-
+import { fetchExpense, deleteExpense } from '../utils';
 const ExpenseList = ({ expenses, setExpenses, setId }) => {
   const [options, setOptions] = useState();
 
