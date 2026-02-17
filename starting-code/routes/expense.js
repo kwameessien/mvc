@@ -17,7 +17,7 @@ router.post('/expense/create', create);
 // Create GET route to read an expense
 router.get('/expenss/:id', expenseById, read);
 // Create PUT route to update an expense
-
+router.put('/expense/:id', expenseById, update);
 // Create DELETE route to remove an expense
 
 // Create GET route to read a list of expenses
