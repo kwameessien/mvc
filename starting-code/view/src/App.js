@@ -41,7 +41,7 @@ function App() {
               onChange={(newValue) => {
                 setSelectDate(newValue);
                 // update view from model w/ controller
-                
+                fetchExpenses(newValue.getTime()).then((res) => setExpenses(res));
               }}
               slotProps={{ textField: { variant: 'outlined' } }}
             />
