@@ -57,12 +57,12 @@ const LogExpense = ({ handleClose, _id, refreshExpenses }) => {
     if (_id) {
       formSetter(data, expense);
       // update data from model w/ controller
-      const res = '';
+      const res = await updateExpense(_id, data);
       expenseListRefresh(res);
     } else {      
       // add data to model w/ controller
       data.set('created_at', expense.created_at);
-      const res = '';
+      const res = await createExpense(data);
       expenseListRefresh(res);
     }
   };
