@@ -28,15 +28,15 @@ const LogExpense = ({ handleClose, _id, refreshExpenses }) => {
 
   const [err, setErr] = useState([]);
 
-  const setExpenseData = async (id) => {
-    // update view w/ data from model
-    const expenseById = await fetchExpense(_id);
-    setExpense(expenseById[0]);
-  };
-
   useEffect(() => {
     if (_id) {
-      setExpenseData(_id);
+      const loadExpense = async () => {
+        const expenseById = await fetchExpense(_id);
+        if (expenseById && expenseById[0]) {
+          setExpense(expenseById[0]);
+        }
+      };
+      loadExpense();
     }
   }, [_id]);
 
