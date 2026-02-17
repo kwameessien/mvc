@@ -15,7 +15,7 @@ const ExpenseList = ({ expenses, setExpenses, setId }) => {
 
   const handleDelete = async (_id) => {
     // send user action to controller
-    
+    await deleteExpense(_id);
     setExpenses(expenses.filter((expense) => expense.expense_id !== _id));
   };
 
