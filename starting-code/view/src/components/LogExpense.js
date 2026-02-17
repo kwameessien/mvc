@@ -30,7 +30,7 @@ const LogExpense = ({ handleClose, _id, refreshExpenses }) => {
 
   const setExpenseData = async (id) => {
     // update view w/ data from model
-    const expenseById = '';
+    const expenseById = await fetchExpense(_id);
     setExpense(expenseById[0]);
   };
 
