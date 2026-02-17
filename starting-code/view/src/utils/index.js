@@ -1,7 +1,13 @@
 export const fetchExpenses = async (date) => {
   const selectDate = new Date(date).getTime() || new Date().getTime();
-  const res = await fetch(`/api/expense/list/${selectDate}`);
-  return res.json();
+  try {
+    const res = await fetch(`/api/expense/list/${selectDate}`);
+    const data = await res.json();
+    if (!res.ok) return [];
+    return Array.isArray(data) || typeof data === 'string' ? data : [];
+  } catch {
+    return [];
+  }
 };
 
 export const resHandler = async (res, status) => {
@@ -32,12 +38,12 @@ export const updateExpense = async (_id, data) => {
 };
 
 export const fetchExpense = async (_id) => {
-  const res = await fetch(`api/expense/${_id}`);
+  const res = await fetch(`/api/expense/${_id}`);
   return res.json();
 };
 
 export const deleteExpense = async (_id) =>
-  fetch(`api/expense/${_id}`, {
+  fetch(`/api/expense/${_id}`, {
     method: 'DELETE',
   });
 

@@ -26,7 +26,7 @@ const ExpenseList = ({ expenses, setExpenses, setId }) => {
         overflow: 'auto',
       }}
     >
-      {typeof expenses !== 'string' ? (
+      {Array.isArray(expenses) ? (
         expenses.map(({ expense_id, title, price }) => (
           <ListItem key={expense_id}>
             <ListItemButton
@@ -59,11 +59,11 @@ const ExpenseList = ({ expenses, setExpenses, setId }) => {
             </ListItemButton>
           </ListItem>
         ))
-      ) : (
+      ) : typeof expenses === 'string' ? (
         <ListItem>
           <ListItemText primary={expenses} />
         </ListItem>
-      )}
+      ) : null}
     </List>
   );
 };

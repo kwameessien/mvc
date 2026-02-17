@@ -1,17 +1,17 @@
 const formidable = require('formidable');
 const { endOfDay, startOfDay } = require('date-fns');
 const pool = require('../models/database');
-const { fieldValidator } = require('../utils/index');
+const { fieldValidator, normalizeFormFields } = require('../utils/index');
 
 exports.create = (req, res) => {
   const form = new formidable.IncomingForm();
   form.keepExtensions = true;
   form.parse(req, async (err, fields) => {
-    const { title, price, category, essential, created_at } = fields;
-    // check for all fields
-    if (fieldValidator(fields)) {
-      return res.status(400).json(fieldValidator(fields));
+    const validationError = fieldValidator(fields);
+    if (validationError) {
+      return res.status(400).json(validationError);
     }
+    const { title, price, category, essential, created_at } = normalizeFormFields(fields);
     try {
       const newExpense = await pool.query(
         'INSERT INTO expenses (title, price, category, essential, created_at) VALUES ($1, $2, $3, $4, $5)',
@@ -30,11 +30,11 @@ exports.update = (req, res) => {
   const id = Number(req.params.id);
   form.keepExtensions = true;
   form.parse(req, async (err, fields) => {
-    // check for all fields
-    const { title, price, category, essential, created_at } = fields;
-    if (fieldValidator(fields)) {
-      return res.status(400).json(fieldValidator(fields));
+    const validationError = fieldValidator(fields);
+    if (validationError) {
+      return res.status(400).json(validationError);
     }
+    const { title, price, category, essential, created_at } = normalizeFormFields(fields);
     try {
       await pool.query(
         'UPDATE expenses SET title = $1, price = $2, category = $3, essential = $4, created_at = $5 WHERE expense_id = $6',
